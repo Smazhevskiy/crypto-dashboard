@@ -10,9 +10,14 @@ export const CurrencyConverter = () => {
     const [chosenPrimaryCurrency, setChosenPrimaryCurrency] = useState('BTC')
     const [chosenSecondaryCurrency, setChosenSecondaryCurrency] = useState('USD')
     const [amount, setAmount] = useState(1)
-    const [exchangeRate, setExchangeRate] = useState(0)
     const [result, setResult] = useState(0)
 
+
+    const [exchangeData, setExchangeData] = useState({
+        primaryCurrency: 'BTC',
+        secondaryCurrency: 'BTC',
+        ExchangeRate: 0
+    })
 
     const chosenPrimaryCurrHandler = (e) => setChosenPrimaryCurrency(e.target.value)
     const chosenSecondaryCurrHandler = (e) => setChosenSecondaryCurrency(e.target.value)
@@ -30,22 +35,28 @@ export const CurrencyConverter = () => {
             },
             headers: {
                 'x-rapidapi-host': 'alpha-vantage.p.rapidapi.com',
-                'x-rapidapi-key': 'd69124657fmshb1f5e6efe393777p1c8c67jsnf79809a4ab2c'
+                'x-rapidapi-key': process.env.RAPID_API_KEY || 'd69124657fmshb1f5e6efe393777p1c8c67jsnf79809a4ab2c'
             }
         }
 
         axios.request(options)
             .then(response => {
                 console.log(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
-                setExchangeRate(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
+                // setExchangeRate(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'])
                 setResult(response.data['Realtime Currency Exchange Rate']['5. Exchange Rate'] * amount)
+                // setPrimaryCurrencyExchange(chosenPrimaryCurrency)
+                // setSecondaryCurrencyExchange(chosenSecondaryCurrency)
+                setExchangeData({
+                    primaryCurrency: chosenPrimaryCurrency,
+                    secondaryCurrency: chosenSecondaryCurrency,
+                    exchangeRate: response.data['Realtime Currency Exchange Rate']['5. Exchange Rate']
+                })
             })
             .catch(error => {
                 console.error(error)
             })
     }
 
-    console.log(exchangeRate)
 
     return (
         <div className="currency-converter">
@@ -106,9 +117,7 @@ export const CurrencyConverter = () => {
             </div>
 
             <ExchangeRate
-                exchangeRate={exchangeRate}
-                chosenPrimaryCurrency={chosenPrimaryCurrency}
-                chosenSecondaryCurrency={chosenSecondaryCurrency}
+                exchangeData={exchangeData}
             />
         </div>
     )

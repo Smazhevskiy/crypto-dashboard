@@ -5,9 +5,12 @@ import {CurrencyConverter} from './components/CurrencyConverter'
 
 
 const App = () => (
-    <div className='app'>
-        <CurrencyConverter/>
-        <NewsFeed/>
+    <div className="app">
+        <h1>Crypto Dashboard</h1>
+        <div className="app-wrapper">
+            <CurrencyConverter/>
+            <NewsFeed/>
+        </div>
     </div>
 )
 

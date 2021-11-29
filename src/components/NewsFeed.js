@@ -14,7 +14,7 @@ export const NewsFeed = () => {
             url: 'https://crypto-news-live.p.rapidapi.com/news',
             headers: {
                 'x-rapidapi-host': 'crypto-news-live.p.rapidapi.com',
-                'x-rapidapi-key': 'd69124657fmshb1f5e6efe393777p1c8c67jsnf79809a4ab2c'
+                'x-rapidapi-key': process.env.RAPID_API_KEY || 'd69124657fmshb1f5e6efe393777p1c8c67jsnf79809a4ab2c'
             }
         }
 
@@ -39,7 +39,6 @@ export const NewsFeed = () => {
                 <div key={_index}>
                     <a href={article.url}><p>{article.title}</p></a>
                 </div>))}
-
         </div>
     )
 }
