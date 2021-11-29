@@ -109,10 +109,8 @@ export const CurrencyConverter = () => {
                             </select>
                         </td>
                     </tr>
-
                     </tbody>
                 </table>
-
                 <button id="convert-button" onClick={convertHandler}>Convert</button>
             </div>
 
